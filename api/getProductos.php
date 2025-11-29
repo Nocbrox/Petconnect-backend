@@ -2,12 +2,20 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-include("../../backend/includes/config.php");
+include("../includes/config.php");
 
 $db = new Conexion();
 
 try {
-    $stmt = $db->pdo->query("
+
+    if (!isset($_GET['id'])) {
+        echo json_encode(['error' => 'ID no especificado']);
+        exit;
+    }
+
+    $id = intval($_GET['id']);
+
+    $stmt = $db->pdo->prepare("
         SELECT 
             p.id,
             p.nombre,
@@ -22,11 +30,22 @@ try {
                 LIMIT 1
             ) AS imagen
         FROM productos p
-        WHERE p.estado = 1
+        WHERE p.id = ? AND p.estado = 1
+        LIMIT 1
     ");
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($data);
+
+    $stmt->execute([$id]);
+
+    $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$producto) {
+        echo json_encode(['error' => 'Producto no encontrado']);
+        exit;
+    }
+
+    echo json_encode($producto);
+
 } catch (PDOException $e) {
-    echo json_encode(['error' => 'Error al obtener productos: ' . $e->getMessage()]);
+    echo json_encode(['error' => 'Error al obtener producto: ' . $e->getMessage()]);
 }
-?>
+
