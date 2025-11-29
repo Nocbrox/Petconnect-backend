@@ -1,4 +1,2 @@
 <?php
-header("Location: /api/");
-exit;
-?>
+echo "API funcionando";
