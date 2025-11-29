@@ -1,10 +1,10 @@
 <?php
 class Conexion {
-    private $host = "interchange.proxy.rlwy.net";
+    private $host = "mysql.railway.internal";
     private $db   = "railway";
     private $user = "root";
     private $pass = "zQUPKAYMNRkdiPPBkDCKLqbpkCgIIAGw";
-    private $port = 50622;
+    private $port = 3306;
 
     public $pdo;
 
@@ -15,13 +15,13 @@ class Conexion {
                 $this->user,
                 $this->pass,
                 [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-                    PDO::MYSQL_ATTR_SSL_CA => false
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
                 ]
             );
         } catch (PDOException $e) {
-            die("Error de conexión: " . $e->getMessage());
+            die(json_encode([
+                "error" => "Error de conexión: " . $e->getMessage()
+            ]));
         }
     }
 }
