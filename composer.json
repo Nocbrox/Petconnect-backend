@@ -1,5 +1,8 @@
 {
   "name": "petconnect/backend",
   "description": "PetConnect API PHP",
-  "require": {}
+  "require": {
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*"
+  }
 }
