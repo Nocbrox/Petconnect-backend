@@ -22,4 +22,3 @@ try {
 } catch (PDOException $e) {
     echo json_encode(['error' => 'Error al obtener destacados: ' . $e->getMessage()]);
 }
-?>
