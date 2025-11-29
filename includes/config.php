@@ -1,10 +1,10 @@
 <?php
 class Conexion {
-    private $host = "mysql.railway.internal";
+    private $host = "interchange.proxy.rlwy.net";  // HOST EXTERNO
     private $db   = "railway";
     private $user = "root";
     private $pass = "zQUPKAYMNRkdiPPBkDCKLqbpkCgIIAGw";
-    private $port = 3306;
+    private $port = 50622; // PUERTO EXTERNO
 
     public $pdo;
 
@@ -15,7 +15,9 @@ class Conexion {
                 $this->user,
                 $this->pass,
                 [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+                    PDO::MYSQL_ATTR_SSL_CA => false
                 ]
             );
         } catch (PDOException $e) {
