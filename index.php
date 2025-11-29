@@ -1,2 +1,3 @@
 <?php
-echo "API funcionando";
+header('Content-Type: application/json');
+echo json_encode(["status" => "API funcionando"]);
