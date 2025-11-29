@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-include("../includes/config.php");
+include("includes/config.php"); // ← RUTA CORRECTA
 
 $db = new Conexion();
 
@@ -43,9 +43,8 @@ try {
         exit;
     }
 
-    echo json_encode($producto);
+    echo json_encode($producto, JSON_UNESCAPED_UNICODE);
 
 } catch (PDOException $e) {
     echo json_encode(['error' => 'Error al obtener producto: ' . $e->getMessage()]);
 }
-
